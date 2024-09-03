@@ -1,12 +1,8 @@
-version: '3'
-
 services:
-
   eureka-server:
     build:
-      context: .
-      dockerfile: discovery-service/Dockerfile
-
+      context: ./discovery-service
+      dockerfile: Dockerfile
     image: eureka
     ports:
       - "8761:8761"
@@ -15,8 +11,8 @@ services:
 
   api-gateway:
     build:
-      context: .
-      dockerfile: api-gateway-service/Dockerfile
+      context: ./api-gateway-service
+      dockerfile: Dockerfile
     image: api-gateway
     ports:
       - "8089:8089"
@@ -25,6 +21,73 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
 
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3307:3306"  # Expose port 3306 inside the container as port 3307 on the host
+    networks:
+      - backend-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  category-service:
+    build:
+      context: ./category-service
+      dockerfile: Dockerfile
+    image: category-service
+    ports:
+      - "8085:8085"
+    networks:
+      - backend-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_USERNAME=root
+
+  comments-service:
+    build:
+      context: ./comments-service
+      dockerfile: Dockerfile
+    image: comments-service
+    ports:
+      - "8086:8086"
+    networks:
+      - backend-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_USERNAME=root
+
+  reservation-service:
+    build:
+      context: ./reservation-service
+      dockerfile: Dockerfile
+    image: reservation-service
+    ports:
+      - "8087:8087"
+    networks:
+      - backend-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_USERNAME=root
+
+  springsecurity-service:
+    build:
+      context: ./springsecurity-service
+      dockerfile: Dockerfile
+    image: springsecurity
+    ports:
+      - "8084:8084"
+    networks:
+      - backend-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_USERNAME=root
+
 networks:
   backend-network:
     driver: bridge
+
+volumes:
+  mysql-data:
