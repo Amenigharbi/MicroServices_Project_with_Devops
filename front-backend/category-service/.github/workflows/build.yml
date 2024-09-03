@@ -1,0 +1,39 @@
+# Définition du nom du service
+name: category-service-build
+
+# Configuration des déclencheurs
+on:
+  push:
+    branches: [pipline-attraction]
+
+# Configuration des jobs
+jobs:
+  # Job pour tester et builder le microservice discovery-service
+  test-and-build:
+    # Configuration de l'environnement d'exécution
+    runs-on: self-hosted
+
+    # Définition des étapes du job
+    steps:
+      # Obtenir le code du repository
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      # Installer les dépendances Maven et builder le projet
+      - name: Installer les dépendances Maven et builder le projet
+        run: mvn clean install -DskipTests
+
+      # Exécuter les tests unitaires
+      - name: Exécuter les tests unitaires
+        run: mvn test
+
+      # Vérifier la couverture de code (facultatif)
+      #- name: Vérifier la couverture de code
+      #  run: mvn cobertura:cobertura
+
+      # Publier le rapport de couverture de code (facultatif)
+      #- name: Publier le rapport de couverture de code
+      #  uses: actions/upload-artifact@v3
+      #  with:
+      #    name: couverture-rapport
+      #    path: target/site/cobertura/cobertura_report.html

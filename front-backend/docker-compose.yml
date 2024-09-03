@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  eureka-server:
+    build:
+      context: .
+      dockerfile: discovery-service/Dockerfile
+
+    image: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - backend-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway-service/Dockerfile
+    image: api-gateway
+    ports:
+      - "8089:8089"
+    networks:
+      - backend-network
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+
+networks:
+  backend-network:
+    driver: bridge

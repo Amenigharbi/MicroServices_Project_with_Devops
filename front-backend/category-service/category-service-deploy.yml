@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: category-service
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: app-guide
+  template:
+    metadata:
+      labels:
+        app: app-guide
+    spec:
+      containers:
+        - name: category-service
+          image: chetouiiftikhar/category-service:01
+          ports:
+            - containerPort: 8085
+          env:
+            # - name: DATABASE_NAME
+            #  value: category-data
+            - name: DATABASE_URL
+              value: jdbc:mysql://localhost:3306/category-data
+            #- name: DATABASE_USERNAME
+            #  value: user1
+            #- name: DATABASE_PASSWORD
+            #  value: user1

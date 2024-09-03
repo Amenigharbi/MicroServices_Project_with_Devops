@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-service
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: app-guide
+  template:
+    metadata:
+      labels:
+        app: app-guide
+    spec:
+      containers:
+        - name: comment-service
+          image: chetouiiftikhar/comment-service:01
+
+          ports:
+            - containerPort: 8086
+
+
+
+
+

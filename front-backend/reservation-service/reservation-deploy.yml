@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-guide
+  template:
+    metadata:
+      labels:
+        app: app-guide
+    spec:
+      containers:
+        - name: reservation-service
+          image: chetouiiftikhar/reservation-service:latest
+
+          ports:
+            - containerPort: 8086
