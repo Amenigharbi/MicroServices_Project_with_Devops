@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/front-backend/reservation-service/pom.xml" />
         <option value="$PROJECT_DIR$/front-backend/category-service/pom.xml" />
         <option value="$PROJECT_DIR$/front-backend/comments-service/pom.xml" />
+        <option value="$PROJECT_DIR$/front-backend/springsecurity-service/pom.xml" />
       </list>
     </option>
   </component>

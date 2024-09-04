@@ -1,4 +1,16 @@
 services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3307:3306"  # Expose port 3306 inside the container as port 3307 on the host
+    networks:
+      - backend-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD:  # No password required
+
   eureka-server:
     build:
       context: ./discovery-service
@@ -21,18 +33,6 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
 
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
-    ports:
-      - "3307:3306"  # Expose port 3306 inside the container as port 3307 on the host
-    networks:
-      - backend-network
-    volumes:
-      - mysql-data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-
   category-service:
     build:
       context: ./category-service
@@ -45,6 +45,8 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
       - SPRING_DATASOURCE_USERNAME=root
+    depends_on:
+      - mysql-db
 
   comments-service:
     build:
@@ -58,6 +60,8 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
       - SPRING_DATASOURCE_USERNAME=root
+    depends_on:
+      - mysql-db
 
   reservation-service:
     build:
@@ -71,6 +75,8 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
       - SPRING_DATASOURCE_USERNAME=root
+    depends_on:
+      - mysql-db
 
   springsecurity-service:
     build:
@@ -84,6 +90,8 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
       - SPRING_DATASOURCE_USERNAME=root
+    depends_on:
+      - mysql-db
 
 networks:
   backend-network:

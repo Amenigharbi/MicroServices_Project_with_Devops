@@ -6,6 +6,8 @@
     <file url="file://$PROJECT_DIR$/front-backend/comments-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/front-backend/discovery-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/front-backend/reservation-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/front-backend/reservation-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/front-backend/springsecurity-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/front-backend/src/main/java" charset="UTF-8" />
   </component>
 </project>
