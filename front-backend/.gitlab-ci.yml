@@ -1,0 +1,31 @@
+# Spécifiez l'image de base pour les jobs
+image: ubuntu:20.04
+
+stages:
+  - docker-build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+# Étape de construction des images Docker
+docker_build:
+  stage: docker-build
+  before_script:
+    - apt-get update && apt-get install -y docker.io docker-compose
+  script:
+    - docker-compose -f docker-compose.yml build
+  only:
+    - main
+
+# Étape de déploiement
+deploy:
+  stage: deploy
+  before_script:
+    - apt-get update && apt-get install -y docker.io docker-compose
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker-compose -f docker-compose.yml push
+  only:
+    - main

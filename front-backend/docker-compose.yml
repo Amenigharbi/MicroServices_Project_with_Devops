@@ -9,7 +9,9 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD:  # No password required
+      MYSQL_DATABASE: microservices # Default database
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
 
   eureka-server:
     build:
@@ -31,7 +33,9 @@ services:
     networks:
       - backend-network
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
 
   category-service:
     build:
@@ -43,10 +47,13 @@ services:
     networks:
       - backend-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/microservices
       - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root  # Add this line for the root password
     depends_on:
       - mysql-db
+      - eureka-server
+
 
   comments-service:
     build:
@@ -58,10 +65,13 @@ services:
     networks:
       - backend-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/microservices
       - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root # Add this line for the root password
     depends_on:
       - mysql-db
+      - eureka-server
+
 
   reservation-service:
     build:
@@ -73,10 +83,13 @@ services:
     networks:
       - backend-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/microservices
       - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       - mysql-db
+      - eureka-server
+
 
   springsecurity-service:
     build:
@@ -88,10 +101,13 @@ services:
     networks:
       - backend-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/PFE-data
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/security
       - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       - mysql-db
+      - eureka-server
+
 
 networks:
   backend-network:
