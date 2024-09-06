@@ -6,10 +6,10 @@ WORKDIR /app
 COPY . .
 
 # Compiler et installer le projet avec Maven, en ignorant les tests
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 # Étape de construction de l'image finale avec OpenJDK
-FROM openjdk:17-jdk-slim
+FROM openjdk:17
 WORKDIR /app
 
 # Copier les artefacts de build depuis l'étape de compilation

@@ -1,17 +1,20 @@
 services:
   mysql-db:
-    image: mysql:8.0
+    image: mysql:latest
     container_name: mysql-db
     ports:
-      - "3307:3306"  # Expose port 3306 inside the container as port 3307 on the host
+      - "3307:3306"
     networks:
       - backend-network
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: microservices # Default database
-      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: microservices
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    command:
+      - --default-authentication-plugin=mysql_native_password
 
   eureka-server:
     build:
@@ -29,7 +32,7 @@ services:
       dockerfile: Dockerfile
     image: api-gateway
     ports:
-      - "8089:8089"
+      - "8762:8762"
     networks:
       - backend-network
     environment:
@@ -49,11 +52,10 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/microservices
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root  # Add this line for the root password
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       - mysql-db
       - eureka-server
-
 
   comments-service:
     build:
@@ -67,11 +69,10 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/microservices
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root # Add this line for the root password
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       - mysql-db
       - eureka-server
-
 
   reservation-service:
     build:
@@ -89,25 +90,6 @@ services:
     depends_on:
       - mysql-db
       - eureka-server
-
-
-  springsecurity-service:
-    build:
-      context: ./springsecurity-service
-      dockerfile: Dockerfile
-    image: springsecurity
-    ports:
-      - "8084:8084"
-    networks:
-      - backend-network
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/security
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    depends_on:
-      - mysql-db
-      - eureka-server
-
 
 networks:
   backend-network:
