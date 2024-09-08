@@ -1,7 +1,7 @@
 services:
   mysql-db:
-    image: mysql:latest
-    container_name: mysql-db
+    image: mysql:8.0
+    container_name: mysql-container
     ports:
       - "3307:3306"
     networks:
@@ -9,12 +9,9 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: microservices
-      MYSQL_USER: root
       MYSQL_PASSWORD: root
-    command:
-      - --default-authentication-plugin=mysql_native_password
+      MYSQL_ROOT_PASSWORD: root
 
   eureka-server:
     build:
@@ -25,6 +22,8 @@ services:
       - "8761:8761"
     networks:
       - backend-network
+    depends_on:
+      - mysql-db
 
   api-gateway:
     build:
