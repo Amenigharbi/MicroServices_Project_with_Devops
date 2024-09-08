@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: chetouiiftikhar/api-gateway:01
-
+          image: amenigharbi/api-gateway
           ports:
             - containerPort: 8089
 

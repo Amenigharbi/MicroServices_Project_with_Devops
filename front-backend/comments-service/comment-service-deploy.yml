@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: comment-service
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: app-guide
@@ -14,12 +14,13 @@ spec:
     spec:
       containers:
         - name: comment-service
-          image: chetouiiftikhar/comment-service:01
-
+          image: amenigharbi/comments-service
           ports:
             - containerPort: 8086
-
-
-
-
-
+          env:
+            - name: DATABASE_URL
+              value: jdbc:mysql://mysql-db:3306/microservices  # Connexion à la base de données MySQL
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              value: root

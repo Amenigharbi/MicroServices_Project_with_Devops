@@ -14,7 +14,13 @@ spec:
     spec:
       containers:
         - name: reservation-service
-          image: chetouiiftikhar/reservation-service:latest
-
+          image: amenigharbi/reservation-service
           ports:
             - containerPort: 8086
+          env:
+            - name: DATABASE_URL
+              value: jdbc:mysql://mysql-db:3306/microservices  # URL de la base de données
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              value: root
