@@ -20,3 +20,4 @@ spec:
           env:
             - name: DATABASE_URL
               value: jdbc:mysql://mysql-db:3306/microservices
+
