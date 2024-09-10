@@ -22,6 +22,12 @@ spec:
               value: "root"
             - name: MYSQL_DATABASE
               value: "microservices"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "root"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-db:3306/microservices
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql

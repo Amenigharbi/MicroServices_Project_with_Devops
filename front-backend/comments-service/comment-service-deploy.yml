@@ -19,8 +19,8 @@ spec:
             - containerPort: 8086
           env:
             - name: DATABASE_URL
-              value: jdbc:mysql://mysql-db:3306/microservices  # Connexion à la base de données MySQL
-            - name: MYSQL_USER
+              value: jdbc:mysql://mysql-db:3306/microservices
+            - name: DATABASE_USER
               value: root
-            - name: MYSQL_PASSWORD
+            - name: DATABASE_PASSWORD
               value: root

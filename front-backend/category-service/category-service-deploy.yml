@@ -18,6 +18,10 @@ spec:
           ports:
             - containerPort: 8085
           env:
-            - name: DATABASE_URL
-              value: jdbc:mysql://mysql-db:3306/microservices
+          - name: DATABASE_URL
+            value: jdbc:mysql://mysql-db:3306/microservices
+          - name: DATABASE_USER
+            value: root
+          - name: DATABASE_PASSWORD
+            value: root
 

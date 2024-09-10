@@ -1,19 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: discovery
+  name: discovery-service
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: app-guide
-  template:
-    metadata:
-      labels:
-        app: app-guide
-    spec:
-      containers:
-        - name: descovery-cont
-          image: amenigharbi/eureka
-          ports:
-            - containerPort: 8761
+    app: app-guide
+  ports:
+    - protocol: TCP
+      port: 8761
+      targetPort: 8761
+  type: NodePort

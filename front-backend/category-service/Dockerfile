@@ -1,4 +1,3 @@
-# Étape de construction de l'image finale avec OpenJDK
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
