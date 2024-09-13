@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: category-service
-          image: amenigharbi/category-service
+          image: categ
+          imagePullPolicy: Never
           ports:
             - containerPort: 8085
           env:

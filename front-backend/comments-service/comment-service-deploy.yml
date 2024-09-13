@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: comment-service
-          image: amenigharbi/comments-service
+          image: comment
+          imagePullPolicy: Never
           ports:
             - containerPort: 8086
           env:

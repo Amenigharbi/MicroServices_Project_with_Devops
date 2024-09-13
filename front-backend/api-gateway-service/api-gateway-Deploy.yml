@@ -13,8 +13,9 @@ spec:
         app: app-guide
     spec:
       containers:
-        - name: api-gateway
-          image: amenigharbi/api-gateway
+        - name: api-gateway-container
+          image: api-gate
+          imagePullPolicy: Never
           ports:
             - containerPort: 8089
 

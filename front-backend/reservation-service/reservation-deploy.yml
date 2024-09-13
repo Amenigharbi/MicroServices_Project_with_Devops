@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: reservation-service
-          image: amenigharbi/reservation-service
+          image: reservation
+          imagePullPolicy: Never
           ports:
             - containerPort: 8086
           env:
