@@ -1,0 +1,73 @@
+stages:
+  - build
+  - push
+
+variables:
+  DOCKER_IMAGE_TAG: latest
+  DOCKER_REGISTRY: docker.io
+  DOCKER_REPOSITORY: $DOCKER_HUB_USERNAME
+
+build-api-gateway:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REPOSITORY/api-gateway-service:$DOCKER_IMAGE_TAG ./api-gateway-service
+
+build-category:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REPOSITORY/category-service:$DOCKER_IMAGE_TAG ./category-service
+
+build-comment:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REPOSITORY/comment-service:$DOCKER_IMAGE_TAG ./comment-service
+
+build-reservation:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REPOSITORY/reservation-service:$DOCKER_IMAGE_TAG ./reservation-service
+
+build-discovery:
+  stage: build
+  script:
+    - docker build -t $DOCKER_REPOSITORY/discovery-service:$DOCKER_IMAGE_TAG ./discovery-service
+
+push-api-gateway:
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker push $DOCKER_REPOSITORY/api-gateway-service:$DOCKER_IMAGE_TAG
+  only:
+    - main
+
+push-category:
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker push $DOCKER_REPOSITORY/category-service:$DOCKER_IMAGE_TAG
+  only:
+    - main
+
+push-comment:
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker push $DOCKER_REPOSITORY/comment-service:$DOCKER_IMAGE_TAG
+  only:
+    - main
+
+push-reservation:
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker push $DOCKER_REPOSITORY/reservation-service:$DOCKER_IMAGE_TAG
+  only:
+    - main
+
+push-discovery:
+  stage: push
+  script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker push $DOCKER_REPOSITORY/discovery-service:$DOCKER_IMAGE_TAG
+  only:
+    - main
