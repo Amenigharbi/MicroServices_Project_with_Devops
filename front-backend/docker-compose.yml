@@ -40,7 +40,6 @@ volumes:
   sonarqube_extensions:
   postgresql:
   postgresql_data:
-
 networks:
   sonarnet:
     driver: bridge
